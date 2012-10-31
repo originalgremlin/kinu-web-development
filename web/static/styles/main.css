@@ -1,0 +1,15 @@
+body {
+	background-color: #cccccc;
+	font-family: sans-serif;
+	text-align: center;
+}
+
+fieldset {
+	border: 0;
+}
+
+a.reset {
+	cursor: pointer;
+	color: #336699;
+	text-decoration: underline;
+}
