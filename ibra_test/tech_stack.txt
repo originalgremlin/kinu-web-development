@@ -1,0 +1,13 @@
+tech stack
+
+front end
+	one page web app:
+	backbone (MV*) framework
+	marionette
+	JQUERY (for DOM and AJAX)
+	UNDERSCORE
+
+database
+	COUCH DB (NO SQL DB)
+	REST API
+	
