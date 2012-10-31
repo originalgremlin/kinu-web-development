@@ -1,13 +1,11 @@
-Hi.  Add your name to the end of this file.  Then add the file to git, commit, and push to the remote repostiory.
-
 1) add your name to the last line of this file
 2) save the file
-3) git add .
-4) git status
-5) git commit -m "Added my name."
-6) git push
+3) git pull origin coming-soon
+4) git add .
+5) git status
+6) git commit -m "Added my name."
+7) git push origin coming-soon
 
 -------------------
 Barry Shapira
 Julia Dills
-
