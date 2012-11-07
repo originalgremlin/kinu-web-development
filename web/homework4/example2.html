@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<script src="../scripts/lib/underscore.js"></script>
+	<script src="../scripts/lib/jquery.js"></script>
+	<script src="../scripts/lib/backbone.js"></script>
+	<script src="../scripts/lib/backbone.marionette.js"></script>
+	<script>_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };</script>
+
+	<!-- TODO: convert this to a form with inputs -->
+	<script type="text/template" id="template-employee">
+		<p>Full Name: {{ name }}</p>
+		<p>Date of Birth: {{ birthdate }}</p>
+		<button>Click to save</button>
+	</script>
+
+	<script>
+	// TODO: expand the model to include phone number, email, etc.
+	// http://backbonejs.org/#Model-defaults
+	var EmployeeModel = Backbone.Model.extend({
+		urlRoot: '/api/kazifasta',
+		defaults: {
+			name: '',
+			birthdate: [2000, 1, 1]
+		}
+	});
+
+	var EmployeeView = Backbone.Marionette.ItemView.extend({
+		events: {
+			'click button': 'onClick'
+		},
+		template: '#template-employee',
+
+		onClick: function (event) {
+			// TODO: get data from the form inputs
+			// http://api.jquery.com/val/
+
+			// TODO: put form data in the model
+			// http://backbonejs.org/#Model-set
+
+			// TODO: save the model to the database
+			// http://backbonejs.org/#Model-save
+		}
+	});
+
+	$('document').ready(function () {
+		var m = new EmployeeModel({
+			name: 'Joe Awesome',
+			birthdate: [1975, 11, 7]
+		});
+
+		// Marionette View instance
+		var v = new EmployeeView({
+			el: '#employee',
+			model: m
+		});
+		v.render();
+	});
+	</script>
+</head>
+
+<body>
+	<div id="employee"></div>
+</body>
+</html>
