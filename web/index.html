@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title>Kazi Fasta</title>
+	<link rel="stylesheet" href="static/styles/main.css" />
+
+	<!--
+		We're not doing much, and there are already 5 script includes.
+
+		When the project grows there can sometimes be 50 or even 100 of these includes,
+		all depending on other scripts (like backbone depends on jquery).  This can be
+		a nightmare to maintain.  We also end up polluting the global namespace with dozens
+		of class names.
+
+		Pretty soon we're going to have to do something about this.  One popular solution
+		is to use the require.js AMD library to asynchronously calculate module dependencies
+		and load our scripts.
+	-->
+	<script src="scripts/lib/underscore.js"></script>
+	<script src="scripts/lib/jquery.js"></script>
+	<script src="scripts/lib/backbone.js"></script>
+	<script src="scripts/lib/backbone.marionette.js"></script>
+	<script src="scripts/main.js"></script>
+
+	<!--
+		These are view templates.  They're not going to live here for long.
+		A much better place is in the web/templates/ directory.  They can go there
+		once we set up require.js.
+	-->
+	<script type="text/template" id="template-coming-soon-form">
+		<h2>Are you interested in our awesome project?  Enter your email below for awesome updates.</h2>
+		<form>
+			<fieldset>
+				<label>Email address</label>
+				<input name="email" type="email" />
+				<button type="submit">Sign Up</button>
+			</fieldset>
+		</form>
+	</script>
+
+	<script type="text/template" id="template-coming-soon-thanks">
+		<h2>Thank you for your interest!</h2>
+		<a class="reset">Reset the page</a>
+	</script>
+</head>
+
+<!--
+	There isn't much of a body, but it never actually gets much bigger.  We just keep
+	stuffing different views into the content section when it's time to show different
+	information.  Watch how we switch back and forth between the coming soon form and
+	thank you views without ever reloading the page.
+-->
+<body>
+	<header>
+		<img src="static/images/logo.png" />
+	</header>
+	<section class="content"></section>
+</body>
+</html>
