@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+	<script src="../scripts/lib/underscore.js"></script>
+	<script src="../scripts/lib/jquery.js"></script>
+	<script src="../scripts/lib/backbone.js"></script>
+	<script src="../scripts/lib/backbone.marionette.js"></script>
+	<script>_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };</script>
+</head>
+
+<body>
+<div id="employee"></div>
+
+<script type="text/template" id="template-employee">
+	<p>Full Name: {{ name }}</p>
+	<p>Date of Birth: {{ birthdate }}</p>
+</script>
+
+<script>
+// numbers
+var a1 = 5,    // integer
+	a2 = 3.59  // float
+
+// string
+var b = 'hello class';
+
+// array
+var c1 = [1, 2, 3, 4, 5],
+	c2 = ['one', 'two', 'three'],
+	c3 = [1, 'two', 3, 'four'],
+	c4 = [1, 'two', 3, 'four', [5,6,7]];
+
+// object
+var d = {
+	key1: 'value 1',
+	key2: 'value 2',
+	key3: 3,
+	key4: [4, 5, 6],
+	key5: { hello: 'world' }
+};
+
+// function that takes two numeric arguments
+var e = function (arg1, arg2) {
+	return arg1 + arg2;
+};
+var f = e(5, 10);
+
+// function that takes a function as an argument
+var g = function (func1) {
+	return 2 * func1(5, 10);
+};
+var h = g(e);
+
+// function used as a 'callback'
+var i = function (event) {
+	console.log(event);
+};
+$('body').on('click', i);
+
+// object class
+var j = Backbone.Model;
+
+// object instance
+var k = new Backbone.Model();
+
+// object inheritance
+var SubClassOfModel = Backbone.Model.extend({
+	something: 'this property only exists in the subclass'
+});
+var instanceOfSubClass = new SubClassOfModel();
+
+// Backbone Model
+var options = {
+	urlRoot: '/api/kazifasta',
+	defaults: {
+		name: '',
+		birthdate: [2000, 1, 1]
+	}
+};
+var Employee = Backbone.Model.extend(options);
+
+// Backbone Model instance
+var barry = new Employee({
+	name: 'Barry Shapira',
+	birthdate: [1975, 11, 7]
+});
+
+// Marionette View
+var EmployeeView = Backbone.Marionette.ItemView.extend({
+	events: {
+		'click': 'onClick'
+	},
+	template: '#template-employee',
+
+	onClick: function (event) {
+		alert('Hello ' + this.model.get('name') + '!');
+	}
+});
+
+// Marionette View instance
+var barryView = new EmployeeView({
+	el: '#employee',
+	model: barry
+});
+barryView.render();
+</script>
+</body>
+</html>
