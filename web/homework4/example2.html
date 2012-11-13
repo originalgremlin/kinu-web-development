@@ -9,10 +9,22 @@
 
 	<!-- TODO: convert this to a form with inputs -->
 	<script type="text/template" id="template-employee">
+		<p>Title: {{ title }}</p>
 		<p>Full Name: {{ name }}</p>
 		<p>Date of Birth: {{ birthdate }}</p>
+		<p>Gender: {{ gender }}</p>
+		<p>Phone Number: {{ phonenumber }}</p>
+		<p>Phisical Address: {{ address }}</p>
+		<p>E-Mail: {{ email }}</p>
+		<p>Basic Qualification: {{ qualification }}</p>
+		<p>Past Experiance: {{ pastexperiance }}</p>
+		<p>Designation: {{ designation }}</p>
+		<p>Basic Salary: {{ basicsalary }}</p>
+		<p>Department: {{ department }}</p>
+		<p>Remarks: {{ remarks }}</p>
 		<button>Click to save</button>
 	</script>
+	
 
 	<script>
 	// TODO: expand the model to include phone number, email, etc.
@@ -20,8 +32,19 @@
 	var EmployeeModel = Backbone.Model.extend({
 		urlRoot: '/api/kazifasta',
 		defaults: {
+			title: '',
 			name: '',
-			birthdate: [2000, 1, 1]
+			birthdate: [2000, 1, 1],
+			gender: '',
+			phonenumber: '',
+			address:'',
+			email: '',
+			qualification: '',
+			pastexperiance: '',
+			designation: '',
+			basicsalary: '',
+			department: '',
+			remarks: ''
 		}
 	});
 
@@ -37,16 +60,46 @@
 
 			// TODO: put form data in the model
 			// http://backbonejs.org/#Model-set
+			var emp = new EmployeeModel({
+				title: $("#title").val(),
+				name: $("#name").val(),
+				birthdate: [$("#year").val(), $("#month").val(), $("#day").val()],
+				gender: $("#ge nder").val(),
+				phonenumber: $("#phonenumber").val(),
+				address:$("#address").val(),
+				email: $("#email").val(),
+				qualification: $("#qualification").val(),
+				pastexperiance: $("#pastexperience").val(),
+				designation: $("#designation").val(),
+				basicsalary: $("#basicsalary").val(),
+				department: $("#department").val(),
+				remarks: $("#remarks").val()
+			});
+			
 
 			// TODO: save the model to the database
 			// http://backbonejs.org/#Model-save
+			emp.save();
+			
+			
 		}
 	});
 
 	$('document').ready(function () {
 		var m = new EmployeeModel({
-			name: 'Joe Awesome',
-			birthdate: [1975, 11, 7]
+			title: 'Mr',
+			name: 'Leonard Nyirenda',
+			birthdate: [1983, 2, 28],
+			gender: 'Male',
+			phonenumber: '255757447737',
+			address:'p.o.box 511 Dar-es-salaam, Tanzania',
+			email: 'nyirendalen@gmail.com',
+			qualification: '',
+			pastexperiance: '4yrs',
+			designation: 'Coder',
+			basicsalary: '$200',
+			department: 'Computing',
+			remarks: 'Just testing'
 		});
 
 		// Marionette View instance
