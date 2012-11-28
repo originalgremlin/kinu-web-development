@@ -51,7 +51,12 @@
             var login = new Main.Login();
             this.region_content.show(login);
         });
-
+		
+		Application.on('register', function () {
+			var register = new Main.Register();
+            this.region_content.show(register);			
+		});
+		
         Application.on('logout', function () {
             var home = new Main.Home();
             this.region_content.show(home);
