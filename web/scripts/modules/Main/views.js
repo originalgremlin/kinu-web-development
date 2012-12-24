@@ -1,19 +1,39 @@
 define(function (require) {
     'use strict';
 
-    var _ = require('underscore'),
+    var $ = require('jquery'),
+        _ = require('underscore'),
         Application = require('modules/controller'),
         Backbone = require('backbone_rollup'),
         Views = { };
 
     Views.Navigation = Backbone.Marionette.ItemView.extend({
         events: {
-            'click a.login': 'onLoginClick'
+            'click a.login': 'onLoginClick',
+            'submit form': 'onSubmit'
         },
         template: require('text!templates/Main/Navigation.html'),
 
         onLoginClick: function (event) {
+            event.preventDefault();
             Application.trigger('login');
+        },
+
+        onSubmit: function (event) {
+            event.preventDefault();
+            var form = $(event.currentTarget),
+                input = form.find('input[name=search]'),
+                search = input.val();
+            this.searchForJobs(search);
+        },
+
+        searchForJobs: function (search) {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost/api/kazifasta/' + search
+            }).done(function (result) {
+                $('body').append(result);
+            });
         }
     });
 
