@@ -8,10 +8,15 @@ define(function (require){
 
     Models.Job = Main.Model.extend({
         defaults: {
+            type: 'job',
             title: null,
             description: null,
             skills: [],
             salary: 0
+        }
+    }, {
+        converters: {
+            skills: Backbone.ModelBinder.converters.textArray
         }
     });
 

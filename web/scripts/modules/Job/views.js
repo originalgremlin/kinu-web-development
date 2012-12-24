@@ -5,18 +5,20 @@ define(function (require) {
         _ = require('underscore'),
         Application = require('modules/controller'),
         Backbone = require('backbone_rollup'),
-        i18n = require('lib/i18n'),
+        Main = require('modules/Main/views'),
+        Models = require('modules/Job/models'),
         Views = { };
 
-    Views.New = Backbone.Marionette.ItemView.extend({
+    Views.New = Main.Base.extend({
         events: {
             'submit form': 'onSubmit'
         },
-        template: i18n.parse(require('text!templates/Job/New.html')),
+        model: new Models.Job(),
+        template: require('text!templates/Job/New.html'),
 
         onSubmit: function (event) {
             event.preventDefault();
-            console.log('submit the new job');
+            this.model.save();
         }
     });
 

@@ -1,9 +1,9 @@
-define(function (require){
+define(function (require, exports, module){
 
 	var _ = require('underscore'),
 		$ = require('jquery'),
 		Backbone = require('backbone_rollup'),
-		Models = {},
+		Models = { },
 		config = module.config();
 
 	Models.urlRoot = config.urlRoot;
@@ -11,7 +11,12 @@ define(function (require){
 	Models.Model = Backbone.Model.extend({
 		defaults: { },
 		idAttribute: '_id',
-		urlRoot: config.urlRoot
+		urlRoot: config.urlRoot,
+
+		save: function () {
+			this.set('timestamp', (new Date()).valueOf());
+			this._super('save', arguments);
+		}
 	});
 
 	Models.Collection = Backbone.Collection.extend({

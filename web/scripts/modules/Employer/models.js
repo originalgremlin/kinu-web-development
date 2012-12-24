@@ -8,6 +8,7 @@ define(function (require){
 
     Models.Employer = Main.Model.extend({
         defaults: {
+            type: 'employer',
             name: null,
             company: null,
             email: null,

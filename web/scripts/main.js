@@ -3,7 +3,7 @@
 
     require.config({
         config: {
-            'modules/main/models': {
+            'modules/Main/models': {
                 urlRoot: '/api/kazifasta'
             }
         },

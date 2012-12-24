@@ -8,7 +8,33 @@ define(function (require) {
         i18n = require('lib/i18n'),
         Views = { };
 
-    Views.Navigation = Backbone.Marionette.ItemView.extend({
+    Views.Base = Backbone.Marionette.ItemView.extend({
+        beforeRender: function () {
+            this.template = i18n.parse(this.template);
+        },
+
+        onRender: function () {
+            if (this.model) {
+                this.model.set(this.model.defaults, { silent: true });
+                this.bindModel();
+            }
+        },
+
+        bindModel: function () {
+            new Backbone.ModelBinder().bind(this.model, this.$el, this.getModelBindings());
+        },
+
+        getModelBindings: function () {
+            var bindings = Backbone.ModelBinder.createDefaultBindings(this.el, 'name');
+            _.each(this.model.constructor.converters, function (func, attr) {
+                if (bindings[attr])
+                    bindings[attr].converter = func;
+            });
+            return bindings;
+        }
+    });
+
+    Views.Navigation = Views.Base.extend({
         events: {
             'click a.logo': 'onLogoClick',
             'click a.login': 'onLoginClick',
@@ -16,7 +42,7 @@ define(function (require) {
             'click a.employer': 'onEmployerClick',
             'click a.job': 'onJobClick'
         },
-        template: i18n.parse(require('text!templates/Main/Navigation.html')),
+        template: require('text!templates/Main/Navigation.html'),
 
         onLogoClick: function (event) {
             event.preventDefault();
@@ -44,15 +70,15 @@ define(function (require) {
         }
     });
 
-    Views.Home = Backbone.Marionette.ItemView.extend({
-        template: i18n.parse(require('text!templates/Main/Home.html'))
+    Views.Home = Views.Base.extend({
+        template: require('text!templates/Main/Home.html')
     });
 
-    Views.Login = Backbone.Marionette.ItemView.extend({
+    Views.Login = Views.Base.extend({
         events: {
             'submit form': 'onSubmit'
         },
-        template: i18n.parse(require('text!templates/Main/Login.html')),
+        template: require('text!templates/Main/Login.html'),
 
         onSubmit: function (event) {
             event.preventDefault();
