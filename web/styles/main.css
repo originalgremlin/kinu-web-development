@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+}
+
+body > nav {
+    height: 50px;
+    margin: 5px;
+}
+
+body > section.content {
+    height: calc(100% - 50px);
+    height: -webkit-calc(100% - 50px);
+}
+
+nav a.logo {
+    color: #000000;
+    float: left;
+    text-decoration: none;
+}
+
+nav section.links {
+    float: right;
+}
+
+a {
+    color: #336699;
+    cursor: pointer;
+    text-decoration: underline;
+}

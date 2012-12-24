@@ -4,7 +4,7 @@
     require.config({
         config: {
             'modules/main/models': {
-                urlRoot: '/api/egg-energy'
+                urlRoot: '/api/kazifasta'
             }
         },
         paths: {
@@ -34,32 +34,52 @@
     define(function (require) {
         'use strict';
 
-        var $ = require('jquery'),
-            Application = require('modules/controller'),
-            Main = require('modules/Main/views');
+        var _ = require('underscore'),
+            $ = require('jquery'),
+            Application = require('modules/controller');
 
-        // navigation
-        var navigation = new Main.Navigation();
-        Application.region_navigation.show(navigation);
-
-        // content
-        var home = new Main.Home();
-        Application.region_content.show(home);
-
-        // event handling
-        Application.on('login', function () {
-            var login = new Main.Login();
-            this.region_content.show(login);
+        _.each(['Main', 'Employee', 'Employer', 'Job'], function (submodule) {
+            Application.module(submodule);
         });
-		
-		Application.on('register', function () {
-			var register = new Main.Register();
-            this.region_content.show(register);			
-		});
-		
-        Application.on('logout', function () {
-            var home = new Main.Home();
-            this.region_content.show(home);
+
+        var Modules = {
+            Main: {
+                Views: require('modules/Main/views')
+            },
+            Employee: {
+                Views: require('modules/Employee/views')
+            },
+            Employer: {
+                Views: require('modules/Employer/views')
+            },
+            Job: {
+                Views: require('modules/Job/views')
+            }
+        };
+
+        // initial views
+        Application.region_navigation.show(new Modules.Main.Views.Navigation());
+        Application.region_content.show(new Modules.Main.Views.Home());
+
+        // event aggregation
+        Application.Main.on('home', function () {
+            Application.region_content.show(new Modules.Main.Views.Home());
+        });
+
+        Application.Main.on('login', function () {
+            Application.region_content.show(new Modules.Main.Views.Login());
+        });
+
+        Application.Main.on('employee', function () {
+            Application.region_content.show(new Modules.Employee.Views.New());
+        });
+
+        Application.Main.on('employer', function () {
+            Application.region_content.show(new Modules.Employer.Views.New());
+        });
+
+        Application.Main.on('job', function () {
+            Application.region_content.show(new Modules.Job.Views.New());
         });
     });
 })();

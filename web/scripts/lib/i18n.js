@@ -40,5 +40,11 @@ define(function (require) {
 		return args ? _.string.sprintf(msg, args) : msg;
 	};
 
+	i18n.parse = function (template) {
+		return template.replace(/<%\s*(.*?)\s*%>/g, function (match, text) {
+			return i18n.gettext(text);
+		});
+	};
+
 	return i18n;
 });

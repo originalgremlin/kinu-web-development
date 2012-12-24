@@ -5,87 +5,59 @@ define(function (require) {
         _ = require('underscore'),
         Application = require('modules/controller'),
         Backbone = require('backbone_rollup'),
+        i18n = require('lib/i18n'),
         Views = { };
 
     Views.Navigation = Backbone.Marionette.ItemView.extend({
         events: {
+            'click a.logo': 'onLogoClick',
             'click a.login': 'onLoginClick',
-            'submit form': 'onSubmit'
-			'click a.register': 'onRegisterClick'
+            'click a.employee': 'onEmployeeClick',
+            'click a.employer': 'onEmployerClick',
+            'click a.job': 'onJobClick'
         },
-        template: require('text!templates/Main/Navigation.html'),
+        template: i18n.parse(require('text!templates/Main/Navigation.html')),
+
+        onLogoClick: function (event) {
+            event.preventDefault();
+            Application.Main.trigger('home');
+        },
 
         onLoginClick: function (event) {
             event.preventDefault();
-            Application.trigger('login');
+            Application.Main.trigger('login');
         },
 
-        onSubmit: function (event) {
+        onEmployeeClick: function (event) {
             event.preventDefault();
-            var form = $(event.currentTarget),
-                input = form.find('input[name=search]'),
-                search = input.val();
-            this.searchForJobs(search);
+            Application.Main.trigger('employee');
         },
 
-        searchForJobs: function (search) {
-            $.ajax({
-                type: 'GET',
-                url: 'http://localhost/api/kazifasta/' + search
-            }).done(function (result) {
-                $('body').append(result);
-            });
+        onEmployerClick: function (event) {
+            event.preventDefault();
+            Application.Main.trigger('employer');
         },
 
-		onRegisterClick: function (event) {
-		    Application.trigger('register');
-		}
+        onJobClick: function (event) {
+            event.preventDefault();
+            Application.Main.trigger('job');
+        }
     });
 
     Views.Home = Backbone.Marionette.ItemView.extend({
-        events: {
-            'click': 'onClick',
-            'mouseover': 'onMouseOver'
-        },
-        template: require('text!templates/Main/Home.html'),
-
-        onClick: function (event) {
-            console.log('you clicked the home section');
-        },
-
-        onMouseOver: function (event) {
-            console.log('mouseover the home section');
-        }
+        template: i18n.parse(require('text!templates/Main/Home.html'))
     });
 
     Views.Login = Backbone.Marionette.ItemView.extend({
         events: {
-            'click a.logout': 'onLogout'
+            'submit form': 'onSubmit'
         },
-        template: require('text!templates/Main/Login.html'),
+        template: i18n.parse(require('text!templates/Main/Login.html')),
 
-        onLogout: function (event) {
-            Application.trigger('logout');
+        onSubmit: function (event) {
+            event.preventDefault();
+            console.log('submit the login form');
         }
-    });
-
-    Views.Register = Backbone.Marionette.ItemView.extend({
-        events: {
-			'submit form': 'onSubmit'
-        },
-        template: require('text!templates/Main/Register.html'),
-
-		onSubmit: function (event) {
-			event.preventDefault();
-			var target = event.currentTarget;
-			var stuff = $(target).serializeArray();
-
-			var data = {};
-			stuff.forEach(function(obj) { data[obj.name] = obj.value; });
-
-//			console.log(data);
-
-		}
     });
 
     return Views;

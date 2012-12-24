@@ -1,10 +1,12 @@
-<form method="post">
-	<label>Username</label>
-	<input type="text" name="username" value="">
-	<br><br>
-	<label>Password</label>
-	<input type="password" name="password" value="">
-	
-	<input type="submit" name="submit" value="Login">
+<form>
+    <h2><% Login %></h2>
+    <fieldset>
+        <label><% Email %></label>
+        <input type="text" name="email" />
+    </fieldset>
+    <fieldset>
+        <label><% Password %></label>
+        <input type="password" name="password" />
+    </fieldset>
+    <button type="submit"><% Submit %></button>
 </form>
-<a class="logout">Log me out</a>
