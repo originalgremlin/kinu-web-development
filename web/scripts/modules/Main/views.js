@@ -11,6 +11,7 @@ define(function (require) {
         events: {
             'click a.login': 'onLoginClick',
             'submit form': 'onSubmit'
+			'click a.register': 'onRegisterClick'
         },
         template: require('text!templates/Main/Navigation.html'),
 
@@ -34,7 +35,11 @@ define(function (require) {
             }).done(function (result) {
                 $('body').append(result);
             });
-        }
+        },
+
+		onRegisterClick: function (event) {
+		    Application.trigger('register');
+		}
     });
 
     Views.Home = Backbone.Marionette.ItemView.extend({
@@ -62,6 +67,25 @@ define(function (require) {
         onLogout: function (event) {
             Application.trigger('logout');
         }
+    });
+
+    Views.Register = Backbone.Marionette.ItemView.extend({
+        events: {
+			'submit form': 'onSubmit'
+        },
+        template: require('text!templates/Main/Register.html'),
+
+		onSubmit: function (event) {
+			event.preventDefault();
+			var target = event.currentTarget;
+			var stuff = $(target).serializeArray();
+
+			var data = {};
+			stuff.forEach(function(obj) { data[obj.name] = obj.value; });
+
+//			console.log(data);
+
+		}
     });
 
     return Views;
