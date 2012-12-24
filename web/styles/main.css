@@ -8,8 +8,6 @@ body > nav {
 }
 
 body > section.content {
-    height: calc(100% - 50px);
-    height: -webkit-calc(100% - 50px);
 }
 
 nav a.logo {

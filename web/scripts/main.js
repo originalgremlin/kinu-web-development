@@ -63,7 +63,7 @@
 
         // event aggregation
         Application.Main.on('home', function () {
-            Application.region_content.show(new Modules.Main.Views.Home());
+            Application.region_content.show(new Modules.Job.Views.List());
         });
 
         Application.Main.on('login', function () {

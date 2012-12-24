@@ -20,5 +20,13 @@ define(function (require){
         }
     });
 
+    Models.Jobs = Main.Collection.extend({
+        model: Models.Job,
+        urlOptions: {
+            designDoc: 'job',
+            view: 'title'
+        }
+    });
+
     return Models;
 });

@@ -22,5 +22,25 @@ define(function (require) {
         }
     });
 
+    Views.Item = Main.Base.extend({
+        tagName: 'li',
+        template: require('text!templates/Job/Item.html'),
+        templateHelpers: {
+            datePosted: function () {
+                return new Date(this.timestamp).toDateString();
+            }
+        }
+    });
+
+    Views.List = Backbone.Marionette.CollectionView.extend({
+        collection: new Models.Jobs(),
+        itemView: Views.Item,
+        tagName: 'ul',
+
+        onShow: function () {
+            this.collection.fetch();
+        }
+    });
+
     return Views;
 });
